@@ -11,10 +11,10 @@ void main() {
   Get.put(LoggerService());
 
   /// Run the `Chatty` app
-  runApp(Chatty());
+  runApp(ChattyApp());
 }
 
-class Chatty extends StatelessWidget {
+class ChattyApp extends StatelessWidget {
   final logger = Get.find<LoggerService>();
 
   /// Logs everything using [Logger] package
