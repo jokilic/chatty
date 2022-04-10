@@ -52,7 +52,7 @@ class PackageInfoService extends GetxService {
     logger
       ..v('PACKAGE INFO')
       ..v('--------------------')
-      ..v('AppName: $appName\nPackageName: $packageName\nVersion: $version\nBuildNumber: $buildNumber')
-      ..v('--------------------');
+      ..v('AppName: $appName\nVersion: $version\nBuildNumber: $buildNumber')
+      ..v('--------------------\n');
   }
 }
