@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 
 import 'constants/strings.dart';
 import 'global_binding.dart';
+import 'pages.dart';
+import 'screens/home/home_screen.dart';
 import 'services/logger_service.dart';
+import 'theme.dart';
 
 void main() {
   /// Initialize relevant services
@@ -25,29 +28,14 @@ class ChattyApp extends StatelessWidget {
         designSize: const Size(412, 892),
         builder: () => GetMaterialApp(
           title: ChattyStrings.appName,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: MyHomePage(),
+          theme: themeData,
+          initialRoute: HomeScreen.routeName,
+          initialBinding: GlobalBinding(),
+          getPages: pages,
           logWriterCallback: loggingWithLogger,
           defaultTransition: Transition.fadeIn,
-          initialBinding: GlobalBinding(),
           scrollBehavior: const ScrollBehavior(
             androidOverscrollIndicator: AndroidOverscrollIndicator.stretch,
-          ),
-        ),
-      );
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Yoyo'),
-        ),
-        body: const Center(
-          child: Text(
-            'Wasssup??',
           ),
         ),
       );
