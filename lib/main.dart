@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,9 +10,14 @@ import 'screens/home/home_screen.dart';
 import 'services/logger_service.dart';
 import 'theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   /// Initialize relevant services
   Get.put(LoggerService());
+
+  /// Initialize Firebase
+  await Firebase.initializeApp();
 
   /// Run the `Chatty` app
   runApp(ChattyApp());

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,12 +28,30 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>chatty</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB7eo8ICQrE0DSo4XCq9wGEt5iRS3zz0A8",
+      authDomain: "chatty-89c5a.firebaseapp.com",
+      projectId: "chatty-89c5a",
+      storageBucket: "chatty-89c5a.appspot.com",
+      messagingSenderId: "406435016460",
+      appId: "1:406435016460:web:890b4cd32ed5ffe5d72329",
+      measurementId: "G-13KYDDYKQW"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -101,4 +120,5 @@
     }
   </script>
 </body>
+
 </html>
