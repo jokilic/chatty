@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import 'services/app_lifecycle_service.dart';
+import 'services/auth_service.dart';
 import 'services/device_info_service.dart';
 import 'services/hive_service.dart';
 import 'services/location_service.dart';
@@ -18,6 +19,7 @@ class GlobalBinding extends Bindings {
       ..put(StorageService())
       ..put(HiveService())
       ..put(LocationService())
-      ..put(PathProviderService());
+      ..put(PathProviderService())
+      ..put(AuthService());
   }
 }

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'constants/routes.dart';
 import 'constants/strings.dart';
 import 'global_binding.dart';
 import 'pages.dart';
-import 'screens/home/home_screen.dart';
 import 'services/logger_service.dart';
 import 'theme.dart';
 
@@ -35,7 +35,7 @@ class ChattyApp extends StatelessWidget {
         builder: () => GetMaterialApp(
           title: ChattyStrings.appName,
           theme: themeData,
-          initialRoute: HomeScreen.routeName,
+          initialRoute: ChattyRoutes.homeScreen,
           initialBinding: GlobalBinding(),
           getPages: pages,
           logWriterCallback: loggingWithLogger,
