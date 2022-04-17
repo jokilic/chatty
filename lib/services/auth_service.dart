@@ -12,9 +12,9 @@ class AuthService extends GetxService {
   /// ------------------------
 
   ///
-  late final FirebaseAuth _firebaseAuth;
-  FirebaseAuth get firebaseAuth => _firebaseAuth;
-  set firebaseAuth(FirebaseAuth value) => _firebaseAuth = value;
+  late final FirebaseAuth _auth;
+  FirebaseAuth get auth => _auth;
+  set auth(FirebaseAuth value) => _auth = value;
 
   ///
   User? _currentUser;
@@ -28,10 +28,10 @@ class AuthService extends GetxService {
   @override
   void onInit() {
     super.onInit();
-    firebaseAuth = FirebaseAuth.instance;
+    auth = FirebaseAuth.instance;
 
     /// Listener which gets triggered whenever the the user change is detected
-    firebaseAuth.userChanges().listen(
+    auth.userChanges().listen(
       (user) {
         /// Store new user in the `currentUser` variable
         currentUser = user;
@@ -99,7 +99,7 @@ class AuthService extends GetxService {
   /// Sends password reset email to the current user
   Future<void> sendPasswordResetEmail() async {
     if (currentUser != null && currentUser?.email != null) {
-      await firebaseAuth.sendPasswordResetEmail(email: currentUser!.email!);
+      await auth.sendPasswordResetEmail(email: currentUser!.email!);
 
       logger
         ..v('AUTH SERVICE')
@@ -131,7 +131,7 @@ class AuthService extends GetxService {
   /// Register a new user
   Future<void> registerUser({required String email, required String password}) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -167,7 +167,7 @@ class AuthService extends GetxService {
   /// Sign-in user
   Future<void> signIn({required String email, required String password}) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -202,7 +202,7 @@ class AuthService extends GetxService {
 
   /// Sign-out current uset
   Future<void> signOut() async {
-    await firebaseAuth.signOut();
+    await auth.signOut();
 
     logger
       ..v('AUTH SERVICE')
@@ -227,7 +227,7 @@ class AuthService extends GetxService {
       );
 
       // Once signed in, return the UserCredential
-      await firebaseAuth.signInWithCredential(credential);
+      await auth.signInWithCredential(credential);
 
       logger
         ..v('AUTH SERVICE')
