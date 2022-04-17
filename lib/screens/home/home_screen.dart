@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     final homeController = Get.find<HomeController>();
 
     return const Scaffold(
-      backgroundColor: Colors.amber,
+      backgroundColor: Colors.indigo,
     );
   }
 }
