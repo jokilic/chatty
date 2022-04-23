@@ -129,9 +129,9 @@ class AuthService extends GetxService {
   }
 
   /// Register a new user
-  Future<void> registerUser({required String email, required String password}) async {
+  Future<UserCredential?> registerUser({required String email, required String password}) async {
     try {
-      await auth.createUserWithEmailAndPassword(
+      final newUser = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -141,6 +141,8 @@ class AuthService extends GetxService {
         ..v('--------------------')
         ..v('User registered')
         ..v('--------------------\n');
+
+      return newUser;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         logger
@@ -162,6 +164,7 @@ class AuthService extends GetxService {
         ..e('Generic register error: $e')
         ..e('--------------------\n');
     }
+    return null;
   }
 
   /// Sign-in user
