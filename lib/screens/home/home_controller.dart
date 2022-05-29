@@ -18,12 +18,31 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    await createUser();
+
+    await Get.find<FirestoreService>().getChats();
   }
 
   /// ------------------------
   /// METHODS
   /// ------------------------
+
+  Future<void> loginUser() async {
+    final authService = Get.find<AuthService>();
+
+    /// Login user in [Firebase]
+    final userSignedSuccessfully = await authService.signIn(
+      email: 'email@mail.com',
+      password: '0000000',
+    );
+
+    if (userSignedSuccessfully) {
+      /// TODO: Update 'appVersion', 'device', 'isOnline', 'lastSeenOnline', 'latitude' and 'longitude'
+
+    } else {
+      /// TODO: User failed to login
+
+    }
+  }
 
   Future<void> createUser() async {
     final authService = Get.find<AuthService>();
@@ -31,7 +50,7 @@ class HomeController extends GetxController {
 
     /// Create a user in [Firebase]
     final newFirebaseUser = await authService.registerUser(
-      email: 'email@mail.com',
+      email: 'email2@mail.com',
       password: '0000000',
     );
 
@@ -58,6 +77,11 @@ class HomeController extends GetxController {
 
       /// Store the user in [Firestore]
       await firestoreService.addUser(user: newUser);
+
+      /// Go to [MainScreen]
+
+    } else {
+      /// TODO: User failed to register
     }
   }
 }

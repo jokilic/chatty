@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../constants/routes.dart';
 import 'logger_service.dart';
 
 class AuthService extends GetxService {
@@ -40,6 +41,12 @@ class AuthService extends GetxService {
           ..v('--------------------')
           ..v('$user')
           ..v('--------------------\n');
+
+        /// If there is a user, go to [HomeScreen]
+        /// Else, go to [OnboardingScreen]
+        Get.toNamed(
+          user != null ? ChattyRoutes.homeScreen : ChattyRoutes.onboardingScreen,
+        );
       },
     );
   }
@@ -168,7 +175,7 @@ class AuthService extends GetxService {
   }
 
   /// Sign-in user
-  Future<void> signIn({required String email, required String password}) async {
+  Future<bool> signIn({required String email, required String password}) async {
     try {
       await auth.signInWithEmailAndPassword(
         email: email,
@@ -180,6 +187,8 @@ class AuthService extends GetxService {
         ..v('--------------------')
         ..v('User signed in')
         ..v('--------------------\n');
+
+      return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         logger
@@ -201,6 +210,7 @@ class AuthService extends GetxService {
         ..e('Generic sign-in error: $e')
         ..e('--------------------\n');
     }
+    return false;
   }
 
   /// Sign-out current uset

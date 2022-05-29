@@ -32,17 +32,14 @@ class ChattyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
         designSize: const Size(412, 892),
-        builder: () => GetMaterialApp(
+        builder: (_, __) => GetMaterialApp(
           title: ChattyStrings.appName,
           theme: themeData,
-          initialRoute: ChattyRoutes.homeScreen,
+          initialRoute: ChattyRoutes.onboardingScreen,
           initialBinding: GlobalBinding(),
           getPages: pages,
           logWriterCallback: loggingWithLogger,
           defaultTransition: Transition.fadeIn,
-          scrollBehavior: const ScrollBehavior(
-            androidOverscrollIndicator: AndroidOverscrollIndicator.stretch,
-          ),
         ),
       );
 }
