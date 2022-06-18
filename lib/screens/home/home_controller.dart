@@ -18,8 +18,6 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-
-    await loginUser();
   }
 
   /// ------------------------
@@ -38,7 +36,6 @@ class HomeController extends GetxController {
     if (userSignedSuccessfully) {
       /// TODO: Update 'appVersion', 'device', 'isOnline', 'lastSeenOnline', 'latitude' and 'longitude'
 
-      await Get.find<FirestoreService>().getMessages(otherUserID: '5YiUvpTxcYZeGOCp0BXwOWc31aG3');
     } else {
       /// TODO: User failed to login
 
