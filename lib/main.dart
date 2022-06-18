@@ -35,7 +35,7 @@ class ChattyApp extends StatelessWidget {
         builder: (_, __) => GetMaterialApp(
           title: ChattyStrings.appName,
           theme: themeData,
-          initialRoute: ChattyRoutes.homeScreen,
+          initialRoute: ChattyRoutes.onboardingScreen,
           initialBinding: GlobalBinding(),
           getPages: pages,
           logWriterCallback: loggingWithLogger,

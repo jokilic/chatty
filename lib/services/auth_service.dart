@@ -42,10 +42,10 @@ class AuthService extends GetxService {
           ..v('$user')
           ..v('--------------------\n');
 
-        /// If there is a user, go to [HomeScreen]
+        /// If there is a user, go to [ChatScreen]
         /// Else, go to [OnboardingScreen]
         Get.toNamed(
-          user != null ? ChattyRoutes.homeScreen : ChattyRoutes.onboardingScreen,
+          user != null ? ChattyRoutes.chatScreen : ChattyRoutes.onboardingScreen,
         );
       },
     );

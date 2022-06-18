@@ -6,7 +6,7 @@ import '../../services/device_info_service.dart';
 import '../../services/firestore_service.dart';
 import '../../services/package_info_service.dart';
 
-class HomeController extends GetxController {
+class ChatController extends GetxController {
   /// ------------------------
   /// VARIABLES
   /// ------------------------

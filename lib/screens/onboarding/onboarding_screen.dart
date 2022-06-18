@@ -8,15 +8,14 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final onboardingController = Get.find<OnboardingController>();
 
-    return const Scaffold(
-      backgroundColor: Colors.deepPurple,
+    return Scaffold(
+      backgroundColor: Colors.indigoAccent,
       body: Center(
-        child: Text(
-          'Onboarding screen',
-          style: TextStyle(
-            fontSize: 32,
-            color: Colors.white,
-          ),
+        child: Column(
+          children: [
+            TextField(),
+            TextField(),
+          ],
         ),
       ),
     );

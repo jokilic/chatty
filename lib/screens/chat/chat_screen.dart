@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'home_controller.dart';
+import 'chat_controller.dart';
 
-class HomeScreen extends StatelessWidget {
+class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.find<HomeController>();
+    final chatController = Get.find<ChatController>();
 
     return const Scaffold(
       backgroundColor: Colors.indigo,
