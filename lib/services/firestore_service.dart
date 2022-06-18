@@ -151,6 +151,15 @@ class FirestoreService extends GetxService {
     }).toList();
 
     final usersList = await Future.wait(users);
+
+    logger
+      ..v('FIRESTORE SERVICE')
+      ..v('--------------------')
+      ..v('GetChats triggered')
+      ..v('UserID: $userID')
+      ..v('$usersList')
+      ..v('--------------------\n');
+
     return usersList;
   }
 
@@ -182,6 +191,15 @@ class FirestoreService extends GetxService {
         .get();
 
     final user = userRef.data();
+
+    logger
+      ..v('FIRESTORE SERVICE')
+      ..v('--------------------')
+      ..v('User from ID fetched')
+      ..v('UserID: $userID')
+      ..v('$user')
+      ..v('--------------------\n');
+
     return user;
   }
 
@@ -207,11 +225,20 @@ class FirestoreService extends GetxService {
         .get();
 
     final message = otherUserMessagesRef.docs.first.data();
+
+    logger
+      ..v('FIRESTORE SERVICE')
+      ..v('--------------------')
+      ..v('Latest message fetched')
+      ..v('UserID: $userID - OtherUserID: $otherUserID')
+      ..v('$message')
+      ..v('--------------------\n');
+
     return message;
   }
 
   /// Fetches [ChattyMessage] list from [Firestore]
-  Future<void> getMessages({required String otherUserID}) async {
+  Future<List<ChattyMessage>> getMessages({required String otherUserID}) async {
     final userID = Get.find<AuthService>().currentUser?.uid;
 
     /// Get [Messages] `reference` for current user
@@ -230,6 +257,14 @@ class FirestoreService extends GetxService {
     /// Parse fetched list to [List<ChattyMessage>]
     final messages = userMessagesRef.docs.map((message) => message.data()).toList();
 
-    logger.wtf(messages);
+    logger
+      ..v('FIRESTORE SERVICE')
+      ..v('--------------------')
+      ..v('Messages fetched')
+      ..v('UserID: $userID - OtherUserID: $otherUserID')
+      ..v('$messages')
+      ..v('--------------------\n');
+
+    return messages;
   }
 }
