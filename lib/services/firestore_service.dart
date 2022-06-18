@@ -171,6 +171,7 @@ class FirestoreService extends GetxService {
     final chatUser = ChattyChatUser(
       uid: user.userID,
       displayName: chattyUser?.displayName ?? 'no_name',
+      userPhotoURL: chattyUser?.photoURL ?? 'no_url',
       lastMessage: chattyMessage.value,
       lastMessageTime: chattyMessage.timestamp,
     );

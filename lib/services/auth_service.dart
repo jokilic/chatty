@@ -44,9 +44,9 @@ class AuthService extends GetxService {
 
         /// If there is a user, go to [ChatScreen]
         /// Else, go to [OnboardingScreen]
-        Get.toNamed(
-          user != null ? ChattyRoutes.chatScreen : ChattyRoutes.onboardingScreen,
-        );
+        // Get.toNamed(
+        //   user != null ? ChattyRoutes.chatScreen : ChattyRoutes.onboardingScreen,
+        // );
       },
     );
   }

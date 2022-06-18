@@ -1,15 +1,21 @@
 import 'package:get/get.dart';
 
+import '../../models/chatty_chat_user.dart';
 import '../../models/chatty_user.dart';
 import '../../services/auth_service.dart';
 import '../../services/device_info_service.dart';
 import '../../services/firestore_service.dart';
 import '../../services/package_info_service.dart';
 
-class ChatController extends GetxController {
+class ChatController extends GetxController with StateMixin<List<ChattyChatUser>> {
   /// ------------------------
   /// VARIABLES
   /// ------------------------
+
+  ///
+  final _chats = <ChattyChatUser>[].obs;
+  List<ChattyChatUser> get chats => _chats;
+  set chats(List<ChattyChatUser> value) => _chats.assignAll(value);
 
   /// ------------------------
   /// INIT
@@ -18,6 +24,9 @@ class ChatController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    await loginUser();
+    chats = await Get.find<FirestoreService>().getChats();
+    change(chats, status: RxStatus.success());
   }
 
   /// ------------------------
