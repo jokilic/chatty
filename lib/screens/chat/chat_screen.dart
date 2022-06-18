@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../constants/text_styles.dart';
+import '../../services/firestore_service.dart';
 import 'chat_controller.dart';
 
 class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.blueGrey[800],
+        backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(24.r),
+                padding: EdgeInsets.all(32.r),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -30,7 +32,20 @@ class ChatScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Icon(Icons.add),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                      icon: CircleAvatar(
+                        radius: 32.r,
+                        backgroundColor: Colors.white,
+                        child: Obx(
+                          () => Text(
+                            Get.find<FirestoreService>().currentUser?.displayName.trim()[0] ?? '',
+                            style: ChattyTextStyles.chatUserIconLetter,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -62,12 +77,46 @@ class ChatScreen extends StatelessWidget {
                               final chat = chats?[index];
 
                               return ListTile(
-                                trailing: Text(
-                                  chat?.userPhotoURL ?? 'no name',
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  radius: 32.r,
+                                  backgroundColor: Colors.black,
+                                  child: Text(
+                                    chat?.displayName.trim()[0] ?? '',
+                                    style: ChattyTextStyles.chatIconLetter,
+                                  ),
                                 ),
-                                leading: Text(
-                                  chat?.lastMessage ?? 'no idea',
-                                  style: ChattyTextStyles.chatRecentChatsText,
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      chat?.displayName ?? 'no name',
+                                      style: ChattyTextStyles.chatUsername,
+                                    ),
+                                    SizedBox(height: 8.h),
+                                  ],
+                                ),
+                                subtitle: Text(
+                                  chat?.lastMessage ?? 'no message',
+                                  style: ChattyTextStyles.chatMessage,
+                                ),
+                                trailing: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      timeago.format(
+                                        chat?.lastMessageTime ?? DateTime.now(),
+                                        locale: 'en_short',
+                                      ),
+                                      style: ChattyTextStyles.chatTime,
+                                    ),
+                                    SizedBox(height: 8.h),
+                                    Text(
+                                      chat?.userPhotoURL ?? 'no photo',
+                                      style: ChattyTextStyles.chatTime,
+                                    ),
+                                  ],
                                 ),
                               );
                             },

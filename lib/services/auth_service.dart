@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../constants/routes.dart';
+import 'firestore_service.dart';
 import 'logger_service.dart';
 
 class AuthService extends GetxService {
@@ -33,9 +33,16 @@ class AuthService extends GetxService {
 
     /// Listener which gets triggered whenever the the user change is detected
     auth.userChanges().listen(
-      (user) {
+      (user) async {
+        final firestoreService = Get.find<FirestoreService>();
+
         /// Store new user in the `currentUser` variable
         currentUser = user;
+
+        if (currentUser != null) {
+          firestoreService.currentUser = await firestoreService.getUserFromID(userID: currentUser!.uid);
+        }
+
         logger
           ..v('AUTH SERVICE')
           ..v('--------------------')

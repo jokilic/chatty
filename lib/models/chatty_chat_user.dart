@@ -6,6 +6,8 @@ class ChattyChatUser {
   final String userPhotoURL;
   final String lastMessage;
   final DateTime lastMessageTime;
+  final bool lastMessageRead;
+  final bool lastMessageOutgoing;
 
   ChattyChatUser({
     required this.uid,
@@ -13,6 +15,8 @@ class ChattyChatUser {
     required this.userPhotoURL,
     required this.lastMessage,
     required this.lastMessageTime,
+    required this.lastMessageRead,
+    required this.lastMessageOutgoing,
   });
 
   ChattyChatUser copyWith({
@@ -21,6 +25,8 @@ class ChattyChatUser {
     String? userPhotoURL,
     String? lastMessage,
     DateTime? lastMessageTime,
+    bool? lastMessageRead,
+    bool? lastMessageOutgoing,
   }) =>
       ChattyChatUser(
         uid: uid ?? this.uid,
@@ -28,6 +34,8 @@ class ChattyChatUser {
         userPhotoURL: userPhotoURL ?? this.userPhotoURL,
         lastMessage: lastMessage ?? this.lastMessage,
         lastMessageTime: lastMessageTime ?? this.lastMessageTime,
+        lastMessageRead: lastMessageRead ?? this.lastMessageRead,
+        lastMessageOutgoing: lastMessageOutgoing ?? this.lastMessageOutgoing,
       );
 
   Map<String, dynamic> toMap() => {
@@ -36,6 +44,8 @@ class ChattyChatUser {
         'userPhotoURL': userPhotoURL,
         'lastMessage': lastMessage,
         'lastMessageTime': lastMessageTime.millisecondsSinceEpoch,
+        'lastMessageRead': lastMessageRead,
+        'lastMessageOutgoing': lastMessageOutgoing,
       };
 
   factory ChattyChatUser.fromMap(Map<String, dynamic> map) => ChattyChatUser(
@@ -44,6 +54,8 @@ class ChattyChatUser {
         userPhotoURL: map['userPhotoURL'] ?? '',
         lastMessage: map['lastMessage'] ?? '',
         lastMessageTime: DateTime.fromMillisecondsSinceEpoch(map['lastMessageTime']),
+        lastMessageRead: map['lastMessageRead'] ?? '',
+        lastMessageOutgoing: map['lastMessageOutgoing'] ?? '',
       );
 
   String toJson() => json.encode(toMap());
@@ -51,7 +63,8 @@ class ChattyChatUser {
   factory ChattyChatUser.fromJson(String source) => ChattyChatUser.fromMap(json.decode(source));
 
   @override
-  String toString() => 'ChattyChatUser(uid: $uid, displayName: $displayName, userPhotoURL: $userPhotoURL, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime)';
+  String toString() =>
+      'ChattyChatUser(uid: $uid, displayName: $displayName, userPhotoURL: $userPhotoURL, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, lastMessageRead: $lastMessageRead, lastMessageOutgoing: $lastMessageOutgoing)';
 
   @override
   bool operator ==(Object other) {
@@ -64,9 +77,12 @@ class ChattyChatUser {
         other.displayName == displayName &&
         other.userPhotoURL == userPhotoURL &&
         other.lastMessage == lastMessage &&
-        other.lastMessageTime == lastMessageTime;
+        other.lastMessageTime == lastMessageTime &&
+        other.lastMessageRead == lastMessageRead &&
+        other.lastMessageOutgoing == lastMessageOutgoing;
   }
 
   @override
-  int get hashCode => uid.hashCode ^ displayName.hashCode ^ userPhotoURL.hashCode ^ lastMessage.hashCode ^ lastMessageTime.hashCode;
+  int get hashCode =>
+      uid.hashCode ^ displayName.hashCode ^ userPhotoURL.hashCode ^ lastMessage.hashCode ^ lastMessageTime.hashCode ^ lastMessageRead.hashCode ^ lastMessageOutgoing.hashCode;
 }

@@ -18,6 +18,30 @@ class FirestoreService extends GetxService {
 
   late final FirebaseFirestore firestore;
 
+  ///
+  final _currentUser = Rxn(
+    ChattyUser(
+      age: 0,
+      appVersion: '',
+      description: '',
+      device: '',
+      displayName: '-',
+      email: '',
+      facebook: '',
+      instagram: '',
+      isOnline: false,
+      lastSeenOnline: DateTime.now(),
+      latitude: 0,
+      longitude: 0,
+      phoneNumber: '',
+      photoURL: '',
+      twitter: '',
+      uid: '',
+    ),
+  );
+  ChattyUser? get currentUser => _currentUser.value;
+  set currentUser(ChattyUser? value) => _currentUser.value = value;
+
   /// ------------------------
   /// INIT
   /// ------------------------
@@ -131,15 +155,12 @@ class FirestoreService extends GetxService {
     final userID = Get.find<AuthService>().currentUser?.uid;
 
     /// Get [Chats] [QuerySnapshot]
-    final userChatsQuerySnapshot = await firestore
-        .collection('users')
-        .doc(userID)
-        .collection('chats')
-        .withConverter<ChattyChat>(
+    final userChatRef = firestore.collection('users').doc(userID).collection('chats').withConverter<ChattyChat>(
           fromFirestore: (snapshot, _) => ChattyChat.fromMap(snapshot.data()!),
           toFirestore: (chat, _) => chat.toMap(),
-        )
-        .get();
+        );
+
+    final userChatsQuerySnapshot = await userChatRef.get();
 
     /// Parse fetched list to [List<ChattyChat>]
     final chats = userChatsQuerySnapshot.docs.map((chat) => chat.data()).toList();
@@ -167,6 +188,7 @@ class FirestoreService extends GetxService {
   Future<ChattyChatUser> createChattyChatUser({required ChattyChat user}) async {
     final chattyMessage = await getLatestMessage(otherUserID: user.userID);
     final chattyUser = await getUserFromID(userID: user.userID);
+    final currentUserID = Get.find<AuthService>().currentUser?.uid;
 
     final chatUser = ChattyChatUser(
       uid: user.userID,
@@ -174,6 +196,8 @@ class FirestoreService extends GetxService {
       userPhotoURL: chattyUser?.photoURL ?? 'no_url',
       lastMessage: chattyMessage.value,
       lastMessageTime: chattyMessage.timestamp,
+      lastMessageRead: chattyMessage.isRead,
+      lastMessageOutgoing: user.userID == currentUserID,
     );
 
     return chatUser;
@@ -243,20 +267,15 @@ class FirestoreService extends GetxService {
     final userID = Get.find<AuthService>().currentUser?.uid;
 
     /// Get [Messages] `reference` for current user
-    final userMessagesRef = await firestore
-        .collection('users')
-        .doc(userID)
-        .collection('chats')
-        .doc(otherUserID)
-        .collection('messages')
-        .withConverter<ChattyMessage>(
+    final userMessagesRef = firestore.collection('users').doc(userID).collection('chats').doc(otherUserID).collection('messages').withConverter<ChattyMessage>(
           fromFirestore: (snapshot, _) => ChattyMessage.fromMap(snapshot.data()!),
           toFirestore: (message, _) => message.toMap(),
-        )
-        .get();
+        );
+
+    final userMessagesQuerySnapshot = await userMessagesRef.get();
 
     /// Parse fetched list to [List<ChattyMessage>]
-    final messages = userMessagesRef.docs.map((message) => message.data()).toList();
+    final messages = userMessagesQuerySnapshot.docs.map((message) => message.data()).toList();
 
     logger
       ..v('FIRESTORE SERVICE')
